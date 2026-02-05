@@ -1,2 +1,2 @@
 # claude-jail
-Updated docker container for native claude code install
+Since Anthropic wont update their docker container to support the native install I will.
