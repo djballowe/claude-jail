@@ -1,8 +1,6 @@
 FROM debian:bookworm
-
 ARG TZ
 ENV TZ="$TZ"
-
 ARG CLAUDE_CODE_VERSION=latest
 
 # Install basic development tools and iptables/ipset
@@ -25,33 +23,29 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   jq \
   vim \
   curl \
+  wget \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Ensure default node user has access to /usr/local/share
-RUN mkdir -p /usr/local/share/npm-global && \
-  chown -R node:node /usr/local/share
+# Create claude user and group
+RUN groupadd --gid 1000 claude && \
+  useradd --uid 1000 --gid claude --shell /bin/zsh --create-home claude
 
-ARG USERNAME=node
-
-# Persist bash history.
-RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
-  && mkdir /commandhistory \
-  && touch /commandhistory/.bash_history \
-  && chown -R $USERNAME /commandhistory
+ARG USERNAME=claude
 
 # Set `DEVCONTAINER` environment variable to help with orientation
 ENV DEVCONTAINER=true
 
 # Create workspace and config directories and set permissions
-RUN mkdir -p /home/node/.claude && \
-  chown -R node:node /home/node/.claude
+RUN mkdir -p /home/claude/.claude && \
+  chown -R claude:claude /home/claude/.claude
 
-WORKDIR /home/node/projects
+WORKDIR /home/claude/projects
+RUN chown -R claude:claude /home/claude/projects
 
 ARG GIT_DELTA_VERSION=0.18.2
 RUN ARCH=$(dpkg --print-architecture) && \
   wget "https://github.com/dandavison/delta/releases/download/${GIT_DELTA_VERSION}/git-delta_${GIT_DELTA_VERSION}_${ARCH}.deb" && \
-  sudo dpkg -i "git-delta_${GIT_DELTA_VERSION}_${ARCH}.deb" && \
+  dpkg -i "git-delta_${GIT_DELTA_VERSION}_${ARCH}.deb" && \
   rm "git-delta_${GIT_DELTA_VERSION}_${ARCH}.deb"
 
 # Install Go
@@ -79,7 +73,6 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   -p fzf \
   -a "source /usr/share/doc/fzf/examples/key-bindings.zsh" \
   -a "source /usr/share/doc/fzf/examples/completion.zsh" \
-  -a "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
   -x
 
 # Install Claude
@@ -89,6 +82,7 @@ RUN curl -fsSL https://claude.ai/install.sh | zsh
 COPY init-firewall.sh /usr/local/bin/
 USER root
 RUN chmod +x /usr/local/bin/init-firewall.sh && \
-  echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/node-firewall && \
-  chmod 0440 /etc/sudoers.d/node-firewall
-USER node
+  echo "claude ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/claude-firewall && \
+  chmod 0440 /etc/sudoers.d/claude-firewall
+
+USER claude
