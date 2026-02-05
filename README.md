@@ -1,7 +1,8 @@
 # claude-jail
 
+<img src="./prison-claude.png" alt="Screenshot" width="200">
+
 Since Anthropic wont update their docker container to support the native install I will.
-![Screenshot](./prison-claude.png)
 
 
 ### What is this for
