@@ -3,7 +3,10 @@ services:
     image: claude_code:latest
     container_name: claude_code
     build: .
+<<<<<<< Updated upstream
     command: sudo /usr/local/bin/init-firewall.sh
+=======
+>>>>>>> Stashed changes
     user: "1000:1000"
     restart: unless-stopped
     environment:
@@ -17,9 +20,16 @@ services:
       - NET_ADMIN
     volumes:
       # projects
+<<<<<<< Updated upstream
       - /home/david/code/github/tesla-fetch:/home/node/projects/tesla-fetch
       - /home/david/code/github/dotfiles:/home/node/projects/dotfiles
       - /home/david/.config/nvim:/home/node/projects/nvim-config
+=======
+      - /home/david/code/github/tesla-fetch:/home/claude/projects/tesla-fetch
+      - /home/david/code/github/dotfiles:/home/claude/projects/dotfiles
+      - /home/david/code/github/claude-jail:/home/claude/projects/claude-jail
+      - /home/david/.config/nvim:/home/claude/projects/nvim-config
+>>>>>>> Stashed changes
       # config
       - /home/david/.claude:/home/node/.claude
       - /home/david/.claude.json:/home/node/.claude/.claude.json
