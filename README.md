@@ -9,7 +9,7 @@ Since Anthropic wont update their docker container to support the native install
 
 - Run claude code in a locked down safe environment
 - Use `--allow-dangerously-skip-permissions` without fear
-- Includes a firewall sh file for further safety (including the telemetry links that they try to slide in there (I see you Dario))
+- Includes a firewall sh file for further safety (without the telemetry links that they try to slide in there (I see you Dario))
   - You probably dont need this unless you are going to work on sketchy repos
 
 ### Docker Compose
