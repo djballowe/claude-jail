@@ -3,23 +3,23 @@ services:
     image: claude_code:latest
     container_name: claude_code
     build: .
-    command: sudo /usr/local/bin/init-firewall.sh
+    # command: sudo /usr/local/bin/init-firewall.sh
     user: "1000:1000"
     restart: unless-stopped
     environment:
       - TERM=xterm-256color
       - COLORTERM=truecolor
       - FORCE_COLOR=1
-      - CLAUDE_CONFIG_DIR=/home/node/.claude
+      - CLAUDE_CONFIG_DIR=/home/claude/.claude
     stdin_open: true
     tty: true
     cap_add:
       - NET_ADMIN
     volumes:
       # projects
-      - /home/david/code/github/tesla-fetch:/home/node/projects/tesla-fetch
-      - /home/david/code/github/dotfiles:/home/node/projects/dotfiles
-      - /home/david/.config/nvim:/home/node/projects/nvim-config
+      - /home/david/code/github/tesla-fetch:/home/claude/projects/tesla-fetch
+      - /home/david/code/github/dotfiles:/home/claude/projects/dotfiles
+      - /home/david/.config/nvim:/home/claude/projects/nvim-config
       # config
-      - /home/david/.claude:/home/node/.claude
-      - /home/david/.claude.json:/home/node/.claude/.claude.json
+      - /home/david/.claude:/home/claude/.claude
+      - /home/david/.claude.json:/home/claude/.claude/.claude.json
