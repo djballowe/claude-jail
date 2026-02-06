@@ -9,4 +9,4 @@ Since Anthropic wont update their docker container to support the native install
 
 - Run claude code in a locked down safe environment
 - Use `--allow-dangerously-skip-permissions` without fear
-- Includes a firewall sh file for further safety
+- Includes a firewall sh file for further safety (optional)
