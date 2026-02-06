@@ -35,8 +35,8 @@ services:
       - NET_ADMIN                  # Required for the optional iptables firewall (init-firewall.sh)
     volumes:
       # Project directories — mount your host projects into the container
-      - ~/code/my-project:/home/claude/projects/my-project
-      - ~/code/another-project:/home/claude/projects/another-project
+      - ~/path/to/my-project:/home/claude/projects/my-project
+      - ~/path/to/another-project:/home/claude/projects/another-project
       # Config — share your Claude auth/settings so you don't need to re-authenticate
       - ~/.claude:/home/claude/.claude
       - ~/.claude.json:/home/claude/.claude/.claude.json
