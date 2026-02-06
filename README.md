@@ -38,8 +38,8 @@ services:
       - /path/to/my-project:/home/claude/projects/my-project
       - /path/to/another-project:/home/claude/projects/another-project
       # Config — share your Claude auth/settings so you don't need to re-authenticate
-      - ~/.claude:/home/claude/.claude
-      - ~/.claude.json:/home/claude/.claude/.claude.json
+      - home/claude/.claude:/home/claude/.claude
+      - home/claude/.claude.json:/home/claude/.claude/.claude.json
 ```
 
 Build and start the container:
