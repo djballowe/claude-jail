@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   vim \
   curl \
   wget \
+  ca-certificates \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create claude user and group
@@ -75,11 +76,14 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   -a "source /usr/share/doc/fzf/examples/completion.zsh" \
   -x
 
+# add .local to path
+ENV PATH="/home/claude/.local/bin:$PATH"
+
 # Install Claude
 RUN curl -fsSL https://claude.ai/install.sh | zsh
 
 # Copy and set up firewall script
-COPY ../init-firewall.sh /usr/local/bin/
+COPY init-firewall.sh /usr/local/bin/
 USER root
 RUN chmod +x /usr/local/bin/init-firewall.sh && \
   echo "claude ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/claude-firewall && \
