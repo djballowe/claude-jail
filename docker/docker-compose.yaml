@@ -3,7 +3,6 @@ services:
     image: claude_code:latest
     container_name: claude_code
     build: .
-    # command: sudo /usr/local/bin/init-firewall.sh
     user: "1000:1000"
     restart: unless-stopped
     environment:
@@ -19,6 +18,7 @@ services:
       # projects
       - /home/david/code/github/tesla-fetch:/home/claude/projects/tesla-fetch
       - /home/david/code/github/dotfiles:/home/claude/projects/dotfiles
+      - /home/david/code/github/claude-jail:/home/claude/projects/claude-jail
       - /home/david/.config/nvim:/home/claude/projects/nvim-config
       # config
       - /home/david/.claude:/home/claude/.claude
