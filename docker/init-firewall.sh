@@ -4,11 +4,12 @@ IFS=$'\n\t'       # Stricter word splitting
 
 MODE="${1:-up}"
 
+# 1. Extract Docker DNS info BEFORE any flushing
+DOCKER_DNS_RULES=$(iptables-save -t nat | grep "127\.0\.0\.11" || true)
+
 # --- Firewall disable mode ---
 if [ "$MODE" = "--down" ]; then
     echo "Disabling firewall rules..."
-
-    DOCKER_DNS_RULES=$(iptables-save -t nat | grep "127\.0\.0\.11" || true)
 
     iptables -F
     iptables -X
@@ -33,9 +34,6 @@ if [ "$MODE" = "--down" ]; then
 fi
 
 # --- Firewall enable modes (default and --lockdown) ---
-
-# 1. Extract Docker DNS info BEFORE any flushing
-DOCKER_DNS_RULES=$(iptables-save -t nat | grep "127\.0\.0\.11" || true)
 
 # Flush existing rules and delete existing ipsets
 iptables -F

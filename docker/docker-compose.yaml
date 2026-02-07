@@ -33,6 +33,7 @@ services:
     volumes:
       - /home/david/code/github/tesla-fetch:/home/claude/projects/tesla-fetch
       - /home/david/code/github/dotfiles:/home/claude/projects/dotfiles
+      - /home/david/code/github/claude-jail:/home/claude/projects/claude-jail
       - /home/david/.config/nvim:/home/claude/projects/nvim-config
       - /home/david/.claude:/home/claude/.claude
       - /home/david/.claude.json:/home/claude/.claude/.claude.json
