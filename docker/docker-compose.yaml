@@ -1,23 +1,38 @@
+x-common: &common
+  image: claude_code:latest
+  build: .
+  user: "1000:1000"
+  restart: unless-stopped
+  environment:
+    - TERM=xterm-256color
+    - COLORTERM=truecolor
+    - FORCE_COLOR=1
+    - CLAUDE_CONFIG_DIR=/home/claude/.claude
+  stdin_open: true
+  tty: true
+  cap_add:
+    - NET_ADMIN
+
 services:
-  claude:
-    image: claude_code:latest
-    container_name: claude_code
-    build: .
-    user: "1000:1000"
-    restart: unless-stopped
-    environment:
-      - TERM=xterm-256color
-      - COLORTERM=truecolor
-      - FORCE_COLOR=1
-    stdin_open: true
-    tty: true
-    cap_add:
-      - NET_ADMIN
+  sandbox:
+    <<: *common
+    container_name: claude_sandbox
+    command: sudo /usr/local/bin/init-firewall.sh --lockdown
+    profiles:
+      - sandbox
     volumes:
-      # projects
+      - /home/david/.claude:/home/claude/.claude
+      - /home/david/.claude.json:/home/claude/.claude/.claude.json
+
+  pair:
+    <<: *common
+    container_name: claude_pair
+    # command: sudo /usr/local/bin/init-firewall.sh
+    profiles:
+      - pair
+    volumes:
       - /home/david/code/github/tesla-fetch:/home/claude/projects/tesla-fetch
       - /home/david/code/github/dotfiles:/home/claude/projects/dotfiles
       - /home/david/.config/nvim:/home/claude/projects/nvim-config
-      # config
       - /home/david/.claude:/home/claude/.claude
       - /home/david/.claude.json:/home/claude/.claude/.claude.json

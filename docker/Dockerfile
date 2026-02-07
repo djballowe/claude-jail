@@ -32,7 +32,6 @@ RUN groupadd --gid 1000 ${USERNAME} && \
   useradd --uid 1000 --gid ${USERNAME} --shell /bin/zsh --create-home ${USERNAME}
 
 ENV DEVCONTAINER=true
-ENV CLAUDE_CONFIG_DIR=/home/${USERNAME}/.claude
 
 # Create workspace and config directories and set permissions
 RUN mkdir -p /home/${USERNAME}/.claude && \
