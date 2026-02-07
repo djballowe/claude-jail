@@ -71,6 +71,7 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   -p fzf \
   -a "source /usr/share/doc/fzf/examples/key-bindings.zsh" \
   -a "source /usr/share/doc/fzf/examples/completion.zsh" \
+  -a "alias firewall='/usr/local/bin/init-firewall.sh'" \
   -x
 
 # add .local to path
