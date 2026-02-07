@@ -9,4 +9,48 @@ Since Anthropic wont update their docker container to support the native install
 
 - Run claude code in a locked down safe environment
 - Use `--allow-dangerously-skip-permissions` without fear
-- Includes a firewall sh file for further safety (optional)
+- Includes a firewall sh file for further safety (without the telemetry links that they try to slide in there (I see you Dario))
+  - You probably dont need this unless you are going to work on sketchy repos
+
+### Docker Compose
+
+Build from `docker/` and customize the volume mounts for your setup. Here's a full example `docker-compose.yaml`:
+
+```yaml
+services:
+  claude:
+    image: claude_code:latest
+    container_name: claude_code
+    build: .
+    user: "1000:1000"              # Run as non-root claude user (must match Dockerfile UID/GID)
+    restart: unless-stopped
+    environment:
+      - TERM=xterm-256color        # Terminal color support
+      - COLORTERM=truecolor
+      - FORCE_COLOR=1
+      - CLAUDE_CONFIG_DIR=/home/claude/.claude  # Where Claude looks for config inside the container
+    stdin_open: true               # Keep stdin open for interactive use
+    tty: true                      # Allocate a pseudo-TTY
+    cap_add:
+      - NET_ADMIN                  # Required for the optional iptables firewall (init-firewall.sh)
+    volumes:
+      # Project directories — mount your host projects into the container
+      - /path/to/my-project:/home/claude/projects/my-project
+      - /path/to/another-project:/home/claude/projects/another-project
+      # Config — share your Claude auth/settings so you don't need to re-authenticate
+      - path/to/.claude:/home/claude/.claude
+      - path/to/.claude.json:/home/claude/.claude/.claude.json
+```
+
+Build and start the container:
+
+```bash
+cd docker
+docker compose build && docker compose up -d
+```
+
+Attach to the running container:
+
+```bash
+docker exec -it claude_code /bin/zsh
+```

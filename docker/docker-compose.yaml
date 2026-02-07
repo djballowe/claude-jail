@@ -3,7 +3,6 @@ services:
     image: claude_code:latest
     container_name: claude_code
     build: .
-    command: sudo /usr/local/bin/init-firewall.sh
     user: "1000:1000"
     restart: unless-stopped
     environment:
