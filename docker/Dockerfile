@@ -1,7 +1,7 @@
 FROM debian:bookworm
-ARG TZ
+ARG USERNAME=claude
+ARG TZ=America/Los_Angeles
 ENV TZ="$TZ"
-ARG CLAUDE_CODE_VERSION=latest
 
 # Install basic development tools and iptables/ipset
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -27,21 +27,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   ca-certificates \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Create claude user and group
-RUN groupadd --gid 1000 claude && \
-  useradd --uid 1000 --gid claude --shell /bin/zsh --create-home claude
+# Create user and group
+RUN groupadd --gid 1000 ${USERNAME} && \
+  useradd --uid 1000 --gid ${USERNAME} --shell /bin/zsh --create-home ${USERNAME}
 
-ARG USERNAME=claude
-
-# Set `DEVCONTAINER` environment variable to help with orientation
 ENV DEVCONTAINER=true
+ENV CLAUDE_CONFIG_DIR=/home/${USERNAME}/.claude
 
 # Create workspace and config directories and set permissions
-RUN mkdir -p /home/claude/.claude && \
-  chown -R claude:claude /home/claude/.claude
+RUN mkdir -p /home/${USERNAME}/.claude && \
+  chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.claude
 
-WORKDIR /home/claude/projects
-RUN chown -R claude:claude /home/claude/projects
+WORKDIR /home/${USERNAME}/projects
+RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/projects
 
 ARG GIT_DELTA_VERSION=0.18.2
 RUN ARCH=$(dpkg --print-architecture) && \
@@ -57,8 +55,7 @@ RUN ARCH=$(dpkg --print-architecture) && \
   rm "go${GO_VERSION}.linux-${ARCH}.tar.gz"
 ENV PATH=$PATH:/usr/local/go/bin
 
-# Set up non-root user
-USER claude
+USER ${USERNAME}
 
 # Set the default shell to zsh rather than sh
 ENV SHELL=/bin/zsh
@@ -87,7 +84,7 @@ RUN curl -fsSL https://claude.ai/install.sh | zsh
 COPY init-firewall.sh /usr/local/bin/
 USER root
 RUN chmod +x /usr/local/bin/init-firewall.sh && \
-  echo "claude ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/claude-firewall && \
-  chmod 0440 /etc/sudoers.d/claude-firewall
+  echo "${USERNAME} ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/${USERNAME}-firewall && \
+  chmod 0440 /etc/sudoers.d/${USERNAME}-firewall
 
-USER claude
+USER ${USERNAME}
