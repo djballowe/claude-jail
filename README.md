@@ -14,7 +14,6 @@ A dev container for using claude code in a private and secure way.
 ### Docker Compose
 
 - Build from `docker/` and customize the volume mounts for your setup.
-- firewall.sh script can be turned on (only github and anthropic urls) `firewall --on` lockdown (no internet at all) `firewall --lockdown` and off `firewall --down` 
 
 Here's a full example `docker-compose.yaml`:
 
@@ -66,11 +65,11 @@ Toggle the firewall from inside the container when you want to lock things down:
 
 ```bash
 # Lock down network (only Anthropic API allowed) — safe for --dangerously-skip-permissions
-sudo init-firewall.sh --lockdown
+init-firewall.sh --lockdown
 
 # Enable firewall with GitHub + npm access
-sudo init-firewall.sh
+init-firewall.sh
 
 # Disable firewall — full network access
-sudo init-firewall.sh --down
+init-firewall.sh --down
 ```
