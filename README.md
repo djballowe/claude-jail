@@ -13,7 +13,8 @@ A dev container for using claude code in a private and secure way.
 
 ### Docker Compose
 
-Build from `docker/` and customize the volume mounts for your setup. A single container handles both interactive pairing and locked-down sandbox use — just toggle the firewall when you want to use `--dangerously-skip-permissions`.
+- Build from `docker/` and customize the volume mounts for your setup.
+- firewall.sh script can be turned on (only github and anthropic urls) `firewall --on` lockdown (no internet at all) `firewall --lockdown` and off `firewall --down` 
 
 Here's a full example `docker-compose.yaml`:
 
