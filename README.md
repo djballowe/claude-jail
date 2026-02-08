@@ -2,7 +2,8 @@
 
 <img src="./prison-claude.png" alt="Screenshot" width="200">
 
-Since Anthropic wont update their docker container to support the native install I will.
+Anthropic's provided dev container not only is completly out of date and still uses the depricated npm install.
+It also just leaves a lot to be desired. 
 
 
 ### What is this for
