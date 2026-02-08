@@ -65,11 +65,11 @@ Toggle the firewall from inside the container when you want to lock things down:
 
 ```bash
 # Lock down network (only Anthropic API allowed) — safe for --dangerously-skip-permissions
-init-firewall.sh --lockdown
+firewall --lockdown
 
 # Enable firewall with GitHub + npm access
-init-firewall.sh
+firewall or firewall --up
 
 # Disable firewall — full network access
-init-firewall.sh --down
+firewall --down
 ```
