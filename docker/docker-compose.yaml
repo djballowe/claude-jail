@@ -37,3 +37,4 @@ services:
       - /home/david/.config/nvim:/home/claude/projects/nvim-config
       - /home/david/.claude:/home/claude/.claude
       - /home/david/.claude.json:/home/claude/.claude/.claude.json
+      - /home/david/.config/gh:/home/claude/.config/gh
