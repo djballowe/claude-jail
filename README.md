@@ -2,8 +2,7 @@
 
 <img src="./prison-claude.png" alt="Screenshot" width="200">
 
-Anthropic's provided dev container not only is completly out of date and still uses the depricated npm install.
-It also just leaves a lot to be desired. 
+A dev container for using claude code in a private and secure way.
 
 
 ### What is this for
