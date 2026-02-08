@@ -7,16 +7,25 @@ A dev container for using claude code in a private and secure way.
 
 ### What is this for
 
-- Run claude code in a locked down safe environment
-- Use `--allow-dangerously-skip-permissions` without fear
-- Includes a firewall sh file for further safety that you can toggle on and off
+- Run claude code in a locked down seperate from your host machine.
+- Use `--allow-dangerously-skip-permissions` without fear.
+- Includes a firewall sh file for further safety that you can toggle on and off.
 
 ### Docker Compose
 
 Build from `docker/` and customize the volume mounts for your setup. The compose file defines two profiles:
 
-- **sandbox** — Firewall locked down, no internet access. Safe for `--allow-dangerously-skip-permissions`.
-- **pair** — Full network access with project mounts and persistent credentials for interactive pairing.
+- **sandbox** — Put your vibe coding glasses on, let Claude take the wheel.
+  - runs `firewall --lockdown` by default only anthropic API URL allowed.
+  - no file mounts from the host machine. Totally seperate.
+  - safe for `--allow-dangerously-skip-permissions` on new projects.
+- **pair** — You're in charge, pair with Claude.
+  - Has full network access.
+  - Project mounts for working on existing projects.
+  - gh cli and creds mounted from host for automated github interactions.
+ 
+- **firewall.sh** - script for controlling how much network claude has access to
+  - alias firewall in zshrc
 
 Here's a full example `docker-compose.yaml`:
 
