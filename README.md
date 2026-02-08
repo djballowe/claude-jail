@@ -2,7 +2,7 @@
 
 <img src="./prison-claude.png" alt="Screenshot" width="200">
 
-Since Anthropic wont update their docker container to support the native install I will.
+A dev container for using claude code in a private and secure way.
 
 
 ### What is this for
