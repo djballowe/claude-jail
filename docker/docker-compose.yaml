@@ -15,6 +15,8 @@ services:
     cap_add:
       - NET_ADMIN
     volumes:
+      # Workspace
+      - /home/david/code/claude-workspace:/home/claude/workspace
       # Projects
       - /home/david/code/github/tesla-fetch:/home/claude/projects/tesla-fetch
       - /home/david/code/github/dotfiles:/home/claude/projects/dotfiles
