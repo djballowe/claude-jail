@@ -4,7 +4,6 @@
 
 A dev container for using claude code in a private and secure way.
 
-
 ### What is this for
 
 - Run claude code in a locked down safe environment
@@ -23,17 +22,17 @@ services:
     image: claude_code:latest
     build: .
     container_name: claude_code
-    user: "1000:1000"                # Run as non-root claude user (must match Dockerfile UID/GID)
+    user: "1000:1000" # Run as non-root claude user (must match Dockerfile UID/GID)
     restart: unless-stopped
     environment:
-      - TERM=xterm-256color          # Terminal color support
+      - TERM=xterm-256color # Terminal color support
       - COLORTERM=truecolor
       - FORCE_COLOR=1
-      - CLAUDE_CONFIG_DIR=/home/claude/.claude  # Where Claude looks for config inside the container
-    stdin_open: true                 # Keep stdin open for interactive use
-    tty: true                        # Allocate a pseudo-TTY
+      - CLAUDE_CONFIG_DIR=/home/claude/.claude # Where Claude looks for config inside the container
+    stdin_open: true # Keep stdin open for interactive use
+    tty: true # Allocate a pseudo-TTY
     cap_add:
-      - NET_ADMIN                    # Required for the optional iptables firewall (init-firewall.sh)
+      - NET_ADMIN # Required for the optional iptables firewall (init-firewall.sh)
     volumes:
       # Project directories — mount your host projects into the container
       - /path/to/my-project:/home/claude/projects/my-project
@@ -41,8 +40,11 @@ services:
       # Config — share your Claude auth/settings so you don't need to re-authenticate
       - /path/to/.claude:/home/claude/.claude
       - /path/to/.claude.json:/home/claude/.claude/.claude.json
-      # Persist gh CLI auth across container restarts
-      - /path/to/.config/gh:/home/claude/.config/gh
+      # GH CLI credentials - managed by docker login once and persists gh cli auth creds
+      - gh_creds:/home/claude/.config/gh
+
+volumes:
+  gh_creds:
 ```
 
 Build and start the container:
