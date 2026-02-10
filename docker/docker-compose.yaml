@@ -23,4 +23,8 @@ services:
       # Config
       - /home/david/.claude:/home/claude/.claude
       - /home/david/.claude.json:/home/claude/.claude/.claude.json
-      - /home/david/.config/gh:/home/claude/.config/gh
+      # GH CLI credentials
+      - gh_creds:/home/claude/.config/gh
+
+volumes:
+  gh_creds:
