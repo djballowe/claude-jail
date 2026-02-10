@@ -40,7 +40,7 @@ services:
       # Config — share your Claude auth/settings so you don't need to re-authenticate
       - /path/to/.claude:/home/claude/.claude
       - /path/to/.claude.json:/home/claude/.claude/.claude.json
-      # GH CLI credentials - managed by docker login once and persists gh cli auth creds
++      # GH CLI credentials - managed by `gh auth login` and persists gh auth creds
       - gh_creds:/home/claude/.config/gh
 
 volumes:
