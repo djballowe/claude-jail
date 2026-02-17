@@ -16,15 +16,16 @@ services:
       - NET_ADMIN
     volumes:
       # Workspace
-      - /home/david/code/claude-workspace:/home/claude/workspace
+      - ${HOST_HOME}/code/claude-workspace:/home/claude/workspace
       # Projects
-      - /home/david/code/github/tesla-fetch:/home/claude/projects/tesla-fetch
-      - /home/david/code/github/dotfiles:/home/claude/projects/dotfiles
-      - /home/david/code/github/claude-jail:/home/claude/projects/claude-jail
-      - /home/david/.config/nvim:/home/claude/projects/nvim-config
+      - ${HOST_HOME}/code/github/tesla-fetch:/home/claude/projects/tesla-fetch
+      - ${HOST_HOME}/code/github/dotfiles:/home/claude/projects/d``otfiles
+      - ${HOST_HOME}/code/github/claude-jail:/home/claude/projects/claude-jail
+      - ${HOST_HOME}/code/github/Bonsi:/home/claude/projects/Bonsi
+      - ${HOST_HOME}/.config/nvim:/home/claude/projects/nvim-config
       # Config
-      - /home/david/.claude:/home/claude/.claude
-      - /home/david/.claude.json:/home/claude/.claude/.claude.json
+      - ${HOST_HOME}/.claude:/home/claude/.claude
+      - ${HOST_HOME}/.claude.json:/home/claude/.claude/.claude.json
       # GH CLI credentials
       - gh_creds:/home/claude/.config/gh
 

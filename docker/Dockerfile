@@ -56,6 +56,10 @@ ENV PATH=$PATH:/usr/local/go/bin
 
 USER ${USERNAME}
 
+# Use HTTPS for GitHub inside container (host repos use SSH remotes)
+# RUN git config --global url."https://github.com/".insteadOf "git@github.com:" && \
+#   git config --global credential."https://github.com".helper '!/usr/bin/gh auth git-credential'
+
 # Set the default shell to zsh rather than sh
 ENV SHELL=/bin/zsh
 
