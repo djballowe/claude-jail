@@ -10,6 +10,7 @@ services:
       - COLORTERM=truecolor
       - FORCE_COLOR=1
       - CLAUDE_CONFIG_DIR=/home/claude/.claude
+      - GH_TOKEN=${GH_TOKEN}
     stdin_open: true
     tty: true
     cap_add:
@@ -19,15 +20,10 @@ services:
       - ${HOST_HOME}/code/claude-workspace:/home/claude/workspace
       # Projects
       - ${HOST_HOME}/code/github/tesla-fetch:/home/claude/projects/tesla-fetch
-      - ${HOST_HOME}/code/github/dotfiles:/home/claude/projects/d``otfiles
+      - ${HOST_HOME}/code/github/dotfiles:/home/claude/projects/dotfiles
       - ${HOST_HOME}/code/github/claude-jail:/home/claude/projects/claude-jail
-      - ${HOST_HOME}/code/github/Bonsi:/home/claude/projects/Bonsi
+      - ${HOST_HOME}/code/github/Bonsai:/home/claude/projects/Bonsai
       - ${HOST_HOME}/.config/nvim:/home/claude/projects/nvim-config
       # Config
       - ${HOST_HOME}/.claude:/home/claude/.claude
       - ${HOST_HOME}/.claude.json:/home/claude/.claude/.claude.json
-      # GH CLI credentials
-      - gh_creds:/home/claude/.config/gh
-
-volumes:
-  gh_creds:
