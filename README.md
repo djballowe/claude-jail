@@ -33,6 +33,8 @@ services:
     tty: true # Allocate a pseudo-TTY
     cap_add:
       - NET_ADMIN # Required for the optional iptables firewall (init-firewall.sh)
+    environment:
+      - GH_TOKEN=${GH_TOKEN} # optional if you want agent to have access to gh cli
     volumes:
       # Project directories — mount your host projects into the container
       - /path/to/my-project:/home/claude/projects/my-project
@@ -40,11 +42,10 @@ services:
       # Config — share your Claude auth/settings so you don't need to re-authenticate
       - /path/to/.claude:/home/claude/.claude
       - /path/to/.claude.json:/home/claude/.claude/.claude.json
-+      # GH CLI credentials - managed by `gh auth login` and persists gh auth creds
-      - gh_creds:/home/claude/.config/gh
+```
 
-volumes:
-  gh_creds:
+```bash
+GH_TOKEN=github_pat_xxxx...
 ```
 
 Build and start the container:
